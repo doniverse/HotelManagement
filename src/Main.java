@@ -20,7 +20,8 @@ class DashboardPage extends JPanel {
 
 public class Main {
     public static void main(String[] args) {
-        com.formdev.flatlaf.themes.FlatMacLightLaf.install();
+        //com.formdev.flatlaf.themes.FlatMacLightLaf.install();
+        com.formdev.flatlaf.themes.FlatMacDarkLaf.install();
         SwingUtilities.invokeLater(() -> {
             createAndShowGUI();
         });

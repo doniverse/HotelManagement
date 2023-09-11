@@ -25,10 +25,34 @@ class CreateAccountPage extends JPanel {
         JTextField lastNameInput = new JTextField();
         lastNameInput.setBounds(440, top+120, 220, 25);
 
-        JLabel genderLabel = new JLabel("Last Name:");
-        genderLabel.setBounds(440, top+61, 200, 100);
-        JTextField genderInput = new JTextField();
-        genderInput.setBounds(440, top+120, 220, 25);
+        JLabel ageLabel = new JLabel("Age:");
+        ageLabel.setBounds(440, top+110, 200, 100);
+        JTextField ageInput = new JTextField();
+        ageInput.setBounds(440, top+170, 220, 25);
+
+        JLabel usernameLabel = new JLabel("Username:");
+        usernameLabel.setBounds(440, top+160, 200, 100);
+        JTextField usernameInput = new JTextField();
+        usernameInput.setBounds(440, top+220, 220, 25);
+
+        JLabel passwordLabel = new JLabel("Password:");
+        passwordLabel.setBounds(440, top+210, 200, 100);
+        JTextField passwordInput = new JPasswordField();
+        passwordInput.setBounds(440, top+270, 220, 25);
+
+        JLabel genderLabel = new JLabel("Gender:");
+        genderLabel.setBounds(440, top+260, 200, 100);
+        // Create a ButtonGroup to group the radio buttons
+        ButtonGroup genderGroup = new ButtonGroup();
+        // Create radio buttons for Male and Female
+        JRadioButton maleRadioButton = new JRadioButton("Male");
+        maleRadioButton.setBounds(440, top + 315, 100, 30);
+        JRadioButton femaleRadioButton = new JRadioButton("Female");
+        femaleRadioButton.setBounds(550, top + 315, 100, 30);
+        // Add radio buttons to the ButtonGroup
+        genderGroup.add(maleRadioButton);
+        genderGroup.add(femaleRadioButton);
+
 
 //        JLabel usernameLabelCA = new JLabel("Username:");
 //        usernameLabelCA.setBounds(440, 150, 200, 100);
@@ -40,11 +64,12 @@ class CreateAccountPage extends JPanel {
 //        JPasswordField passwordInputCA = new JPasswordField();
 //        passwordInputCA.setBounds(440, 280, 220, 25);
 
-        JButton createAccountButtonCA = new JButton("Create Account");
-        createAccountButtonCA.setBounds(440, 320, 220, 30);
-        createAccountButtonCA.addActionListener(new ActionListener() {
+        JButton createAccountButton = new JButton("Create Account");
+        createAccountButton.setBounds(440, top+355, 220, 30);
+        createAccountButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.out.println("🎊 fucker");
 //                    String username = firstNameInput.getText();
 //                    char[] passwordChars = passwordInputCA.getPassword(); // Get the password as a character array
 //                    String password = new String(passwordChars); // Convert the character array to a string
@@ -93,36 +118,47 @@ class CreateAccountPage extends JPanel {
             }
         });
 
-
-        JButton logInButtonCA = new JButton("Log In");
-        logInButtonCA.setBounds(440, 355, 220, 30);
-        logInButtonCA.addActionListener(new ActionListener() {
+        JButton logInButton = new JButton("Log In");
+        logInButton.setBounds(440, top+390, 220, 30);
+        logInButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(container, "logInPage");
             }
-        });;
+        });
 
         add(createAccountTitle);
         add(firstNameLabel);
         add(firstNameInput);
         add(lastNameLabel);
         add(lastNameInput);
+        add(ageLabel);
+        add(ageInput);
+        add(usernameLabel);
+        add(usernameInput);
+        add(passwordLabel);
+        add(passwordInput);
+        add(genderLabel);
+        add(maleRadioButton);
+        add(femaleRadioButton);
+
+
 //        add(usernameLabelCA);
 //        add(usernameInputCA);
        // add(passwordLabelCA);
         //add(passwordInputCA);
-        add(logInButtonCA);
-        add(createAccountButtonCA);
+        add(logInButton);
+        add(createAccountButton);
     }
 }
 
 
 class LogInPage extends JPanel {
+    private int top = 150;
     LogInPage(CardLayout cardLayout, JPanel container) {
         setLayout(null);
 
-        JButton nextPageButton = new JButton("Next Page");
-        nextPageButton.setBounds(500, 400, 100, 30);
+//        JButton nextPageButton = new JButton("Next Page");
+//        nextPageButton.setBounds(500, 400, 100, 30);
 
         JLabel logInTitle = new JLabel("Log In");
         logInTitle.setBounds(480, 100, 200, 100);
