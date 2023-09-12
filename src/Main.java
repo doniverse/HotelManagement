@@ -23,11 +23,11 @@ public class Main {
         //com.formdev.flatlaf.themes.FlatMacLightLaf.install();
         com.formdev.flatlaf.themes.FlatMacDarkLaf.install();
         SwingUtilities.invokeLater(() -> {
-            createAndShowGUI();
+            landingPage();
         });
     }
 
-    private static void createAndShowGUI() {
+    private static void landingPage() {
         JFrame frame = new JFrame("Hotel Management");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1100, 700);
@@ -35,13 +35,13 @@ public class Main {
 
         JPanel container = new JPanel(new CardLayout());
 
-        CreateAccountPage createAccountPage = new CreateAccountPage((CardLayout) container.getLayout(), container);
+        //CreateAccountPage createAccountPage = new CreateAccountPage((CardLayout) container.getLayout(), container);
         LogInPage logInPage = new LogInPage((CardLayout) container.getLayout(), container);
         DashboardPage dashboardPage = new DashboardPage((CardLayout) container.getLayout(), container);
 
         container.add(logInPage, "logInPage");
         container.add(dashboardPage, "dashboard");
-        container.add(createAccountPage, "createAccountPage");
+        //container.add(createAccountPage, "createAccountPage");
 
         frame.add(container);
         frame.setVisible(true);

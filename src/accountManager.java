@@ -153,7 +153,13 @@ class CreateAccountPage extends JPanel {
 
 
 class LogInPage extends JPanel {
+
+    static String uname = "root";
+    static String dbPassword = "naolfekadu123";
+    static String url = "jdbc:mysql://localhost:3306/hotelmanagement";
+    PreparedStatement pst;
     private int top = 150;
+    boolean userFound = false;
     LogInPage(CardLayout cardLayout, JPanel container) {
         setLayout(null);
 
@@ -174,8 +180,50 @@ class LogInPage extends JPanel {
         JPasswordField passwordInput = new JPasswordField();
         passwordInput.setBounds(440, 280, 220, 25);
 
+        JLabel alert = new JLabel();
+        alert.setForeground(Color.PINK); // Set the foreground color to red
+        alert.setBounds(440, 320, 200, 100);
+
         JButton logInButton = new JButton("Log In");
         logInButton.setBounds(440, 320, 220, 30);
+        logInButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String username = usernameInput.getText();
+                char[] passwordArr = passwordInput.getPassword();
+                String userPassword = new String(passwordArr);
+
+                String query = "SELECT * FROM employee WHERE username = '" + username + "'";
+                try{
+                    Connection con = DriverManager.getConnection(url, uname, dbPassword);
+                    Statement statement = con.createStatement();
+                    ResultSet result = statement.executeQuery(query);
+
+                    while(result.next()){
+                        for(int i = 1; i <= 7; i++){
+                            System.out.println(result.getString(i));
+                        }
+                        if(userPassword.equals(result.getString(7))) {
+                            System.out.println("User logged in!");
+                            //redirect to dashboard
+                        }
+                        else {
+                            System.out.println("Wrong password!");
+                            alert.setText("Wrong password!");
+
+                        }
+                        userFound = true;
+                    }
+                }catch(SQLException searchError){
+                    searchError.printStackTrace();
+                }
+                if (!userFound) {
+                    System.out.println("User not found!");
+                    alert.setText("User not found!");
+                }
+            }
+        });
+        /*
         JButton createAccountButton = new JButton("Create Account");
         createAccountButton.setBounds(440, 355, 220, 30);
 
@@ -184,20 +232,23 @@ class LogInPage extends JPanel {
                 cardLayout.show(container, "createAccountPage");
             }
         });
+        */
 
-        nextPageButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                cardLayout.show(container, "dashboard");
-            }
-        });
 
-        add(nextPageButton);
+//        nextPageButton.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                cardLayout.show(container, "dashboard");
+//            }
+//        });
+
+        //add(nextPageButton);
         add(logInTitle);
         add(usernameLabel);
         add(usernameInput);
         add(passwordLabel);
         add(passwordInput);
         add(logInButton);
-        add(createAccountButton);
+        add(alert);
+        //add(createAccountButton);
     }
 }
