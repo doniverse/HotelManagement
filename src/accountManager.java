@@ -5,6 +5,100 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
 
+
+
+
+
+class RegisterUserPage extends  JPanel{
+    private int top = 150;
+
+    RegisterUserPage(CardLayout cardLayout, JPanel container) {
+        setLayout(null);
+
+        JLabel createAccountTitle = new JLabel("Create Account");
+        createAccountTitle.setBounds(400, 100, 400, 100);
+        createAccountTitle.setFont(new Font(createAccountTitle.getFont().getName(), Font.PLAIN, 48));
+
+        JLabel firstNameLabel = new JLabel("First Name:");
+        firstNameLabel.setBounds(440, top, 200, 100);
+        JTextField firstNameInput = new JTextField();
+        firstNameInput.setBounds(440, top+60, 220, 25);
+
+        JLabel lastNameLabel = new JLabel("Last Name:");
+        lastNameLabel.setBounds(440, top+61, 200, 100);
+        JTextField lastNameInput = new JTextField();
+        lastNameInput.setBounds(440, top+120, 220, 25);
+
+        JLabel ageLabel = new JLabel("Age:");
+        ageLabel.setBounds(440, top+110, 200, 100);
+        JTextField ageInput = new JTextField();
+        ageInput.setBounds(440, top+170, 220, 25);
+
+        JLabel usernameLabel = new JLabel("Username:");
+        usernameLabel.setBounds(440, top+160, 200, 100);
+        JTextField usernameInput = new JTextField();
+        usernameInput.setBounds(440, top+220, 220, 25);
+
+        JLabel passwordLabel = new JLabel("Password:");
+        passwordLabel.setBounds(440, top+210, 200, 100);
+        JTextField passwordInput = new JPasswordField();
+        passwordInput.setBounds(440, top+270, 220, 25);
+
+        JLabel genderLabel = new JLabel("Gender:");
+        genderLabel.setBounds(440, top+260, 200, 100);
+        // Create a ButtonGroup to group the radio buttons
+        ButtonGroup genderGroup = new ButtonGroup();
+        // Create radio buttons for Male and Female
+        JRadioButton maleRadioButton = new JRadioButton("Male");
+        maleRadioButton.setBounds(440, top + 315, 100, 30);
+        JRadioButton femaleRadioButton = new JRadioButton("Female");
+        femaleRadioButton.setBounds(550, top + 315, 100, 30);
+        // Add radio buttons to the ButtonGroup
+        genderGroup.add(maleRadioButton);
+        genderGroup.add(femaleRadioButton);
+
+
+        JButton createAccountButton = new JButton("Create Account");
+        createAccountButton.setBounds(440, top+355, 220, 30);
+        createAccountButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("🎊 registering user");
+            }
+        });
+
+        JButton logInButton = new JButton("Log In");
+        logInButton.setBounds(440, top+390, 220, 30);
+        logInButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(container, "logInPage");
+            }
+        });
+
+        add(createAccountTitle);
+        add(firstNameLabel);
+        add(firstNameInput);
+        add(lastNameLabel);
+        add(lastNameInput);
+        add(ageLabel);
+        add(ageInput);
+        add(usernameLabel);
+        add(usernameInput);
+        add(passwordLabel);
+        add(passwordInput);
+        add(genderLabel);
+        add(maleRadioButton);
+        add(femaleRadioButton);
+        add(logInButton);
+        add(createAccountButton);
+    }
+}
+
+
+
+
+
+
 class CreateAccountPage extends JPanel {
     private int top = 150;
 
@@ -69,7 +163,7 @@ class CreateAccountPage extends JPanel {
         createAccountButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("🎊 fucker");
+                System.out.println("🎊 creating employee account");
 //                    String username = firstNameInput.getText();
 //                    char[] passwordChars = passwordInputCA.getPassword(); // Get the password as a character array
 //                    String password = new String(passwordChars); // Convert the character array to a string
@@ -189,6 +283,8 @@ class LogInPage extends JPanel {
         logInButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                cardLayout.show(container, "dashboard");
+                /* ⛔⛔⛔
                 userFound = false;
                 String username = usernameInput.getText();
                 char[] passwordArr = passwordInput.getPassword();
@@ -221,6 +317,7 @@ class LogInPage extends JPanel {
                     System.out.println("User not found!");
                     alert.setText("User not found!");
                 }
+                */
             }
         });
         /*

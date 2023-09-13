@@ -23,9 +23,11 @@ public class Main {
         //CreateAccountPage createAccountPage = new CreateAccountPage((CardLayout) container.getLayout(), container);
         LogInPage logInPage = new LogInPage((CardLayout) container.getLayout(), container);
         DashboardPage dashboardPage = new DashboardPage((CardLayout) container.getLayout(), container);
+        RegisterUserPage registerUserPage = new RegisterUserPage((CardLayout) container.getLayout(), container);
 
         container.add(logInPage, "logInPage");
         container.add(dashboardPage, "dashboard");
+        container.add(registerUserPage, "registerPage");
         //container.add(createAccountPage, "createAccountPage");
 
         frame.add(container);
