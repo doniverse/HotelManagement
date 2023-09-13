@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 class DashboardPage extends JPanel {
     private int top = 150;
+    public boolean setRegisterButton = true;
 
     DashboardPage(CardLayout cardLayout, JPanel container) {
         setLayout(null);

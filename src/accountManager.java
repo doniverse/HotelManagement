@@ -6,18 +6,15 @@ import java.awt.event.ActionListener;
 import java.sql.*;
 
 
-
-
-
 class RegisterUserPage extends  JPanel{
-    private int top = 150;
+    private int top = 80;
 
     RegisterUserPage(CardLayout cardLayout, JPanel container) {
         setLayout(null);
 
         JLabel createAccountTitle = new JLabel("Register User");
-        createAccountTitle.setBounds(400, 100, 400, 100);
-        createAccountTitle.setFont(new Font(createAccountTitle.getFont().getName(), Font.PLAIN, 48));
+        createAccountTitle.setBounds(400, 30, 400, 100);
+        createAccountTitle.setFont(new Font(createAccountTitle.getFont().getName(), Font.BOLD, 48));
 
         JLabel firstNameLabel = new JLabel("First Name:");
         firstNameLabel.setBounds(440, top, 200, 100);
@@ -34,32 +31,42 @@ class RegisterUserPage extends  JPanel{
         JTextField ageInput = new JTextField();
         ageInput.setBounds(440, top+170, 220, 25);
 
+        JLabel addressLabel = new JLabel("Adress:");
+        addressLabel.setBounds(440, top+160, 200,100);
+        JTextField addressInput = new JTextField();
+        addressInput.setBounds(440, top+220, 220, 25);
+
+        JLabel contactLabel = new JLabel("Contact:");
+        contactLabel.setBounds(440, top+210, 200, 100);
+        JTextField contactInput = new JTextField();
+        contactInput.setBounds(440, top+270,220, 25);
+
         JLabel usernameLabel = new JLabel("Username:");
-        usernameLabel.setBounds(440, top+160, 200, 100);
+        usernameLabel.setBounds(440, top+260, 200, 100);
         JTextField usernameInput = new JTextField();
-        usernameInput.setBounds(440, top+220, 220, 25);
+        usernameInput.setBounds(440, top+320, 220, 25);
 
         JLabel passwordLabel = new JLabel("Password:");
-        passwordLabel.setBounds(440, top+210, 200, 100);
+        passwordLabel.setBounds(440, top+310, 200, 100);
         JTextField passwordInput = new JPasswordField();
-        passwordInput.setBounds(440, top+270, 220, 25);
+        passwordInput.setBounds(440, top+370, 220, 25);
 
         JLabel genderLabel = new JLabel("Gender:");
-        genderLabel.setBounds(440, top+260, 200, 100);
+        genderLabel.setBounds(440, top+360, 200, 100);
         // Create a ButtonGroup to group the radio buttons
         ButtonGroup genderGroup = new ButtonGroup();
         // Create radio buttons for Male and Female
         JRadioButton maleRadioButton = new JRadioButton("Male");
-        maleRadioButton.setBounds(440, top + 315, 100, 30);
+        maleRadioButton.setBounds(440, top + 415, 100, 30);
         JRadioButton femaleRadioButton = new JRadioButton("Female");
-        femaleRadioButton.setBounds(550, top + 315, 100, 30);
+        femaleRadioButton.setBounds(550, top + 415, 100, 30);
         // Add radio buttons to the ButtonGroup
         genderGroup.add(maleRadioButton);
         genderGroup.add(femaleRadioButton);
 
 
         JButton createAccountButton = new JButton("Create Account");
-        createAccountButton.setBounds(440, top+355, 220, 30);
+        createAccountButton.setBounds(440, top+450, 220, 30);
         createAccountButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -68,7 +75,7 @@ class RegisterUserPage extends  JPanel{
         });
 
         JButton logInButton = new JButton("Log In");
-        logInButton.setBounds(440, top+390, 220, 30);
+        logInButton.setBounds(440, top+495, 220, 30);
         logInButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(container, "logInPage");
@@ -82,6 +89,10 @@ class RegisterUserPage extends  JPanel{
         add(lastNameInput);
         add(ageLabel);
         add(ageInput);
+        add(addressLabel);
+        add(addressInput);
+        add(contactLabel);
+        add(contactInput);
         add(usernameLabel);
         add(usernameInput);
         add(passwordLabel);
@@ -274,12 +285,25 @@ class LogInPage extends JPanel {
         JPasswordField passwordInput = new JPasswordField();
         passwordInput.setBounds(440, 280, 220, 25);
 
+        JLabel userChoice = new JLabel("You are: ");
+        userChoice.setBounds(440, 300, 200, 50);
+
+        JRadioButton customerButton = new JRadioButton("A Customer");
+        customerButton.setBounds(440, 330, 100, 30);
+        JRadioButton employeeButton = new JRadioButton("An Employee");
+        employeeButton.setBounds(440, 350, 100, 30);
+
+        //adding them to a button group
+        ButtonGroup userGroup = new ButtonGroup();
+        userGroup.add(customerButton);
+        userGroup.add(employeeButton);
+
         JLabel alert = new JLabel();
         alert.setForeground(Color.PINK); // Set the foreground color to red
         alert.setBounds(440, 320, 200, 100);
 
         JButton logInButton = new JButton("Log In");
-        logInButton.setBounds(440, 320, 220, 30);
+        logInButton.setBounds(440, 390, 220, 30);
         logInButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -344,6 +368,9 @@ class LogInPage extends JPanel {
         add(usernameInput);
         add(passwordLabel);
         add(passwordInput);
+        add(userChoice);
+        add(customerButton);
+        add(employeeButton);
         add(logInButton);
         add(alert);
         //add(createAccountButton);
