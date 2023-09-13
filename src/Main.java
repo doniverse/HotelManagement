@@ -3,21 +3,6 @@ import java.awt.*;
 import java.awt.event.*;
 
 
-
-
-class DashboardPage extends JPanel {
-    DashboardPage(CardLayout cardLayout, JPanel container) {
-        JButton prevPageButton = new JButton("Previous Page");
-        prevPageButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                cardLayout.show(container, "logInPage");
-            }
-        });
-        add(prevPageButton);
-        add(new JLabel("Dashboard Here"));
-    }
-}
-
 public class Main {
     public static void main(String[] args) {
         //com.formdev.flatlaf.themes.FlatMacLightLaf.install();

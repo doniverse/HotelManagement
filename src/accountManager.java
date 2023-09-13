@@ -189,6 +189,7 @@ class LogInPage extends JPanel {
         logInButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                userFound = false;
                 String username = usernameInput.getText();
                 char[] passwordArr = passwordInput.getPassword();
                 String userPassword = new String(passwordArr);
@@ -204,8 +205,7 @@ class LogInPage extends JPanel {
                             System.out.println(result.getString(i));
                         }
                         if(userPassword.equals(result.getString(7))) {
-                            System.out.println("User logged in!");
-                            //redirect to dashboard
+                            cardLayout.show(container, "dashboard");
                         }
                         else {
                             System.out.println("Wrong password!");
