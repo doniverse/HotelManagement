@@ -307,7 +307,11 @@ class LogInPage extends JPanel {
         logInButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cardLayout.show(container, "dashboard");
+
+                if(customerButton.isSelected())
+                    cardLayout.show(container, "customerDashboard");
+                else if(employeeButton.isSelected())
+                    cardLayout.show(container, "employeeDashboard");
                 /* ⛔⛔⛔
                 userFound = false;
                 String username = usernameInput.getText();

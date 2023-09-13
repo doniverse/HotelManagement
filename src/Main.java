@@ -22,12 +22,14 @@ public class Main {
 
         //CreateAccountPage createAccountPage = new CreateAccountPage((CardLayout) container.getLayout(), container);
         LogInPage logInPage = new LogInPage((CardLayout) container.getLayout(), container);
-        DashboardPage dashboardPage = new DashboardPage((CardLayout) container.getLayout(), container);
+        EmployeeDashboardPage employeeDashboardPage = new EmployeeDashboardPage((CardLayout) container.getLayout(), container);
+        CustomerDashboardPage customerDashboardPage = new CustomerDashboardPage((CardLayout) container.getLayout(), container);
         RegisterUserPage registerUserPage = new RegisterUserPage((CardLayout) container.getLayout(), container);
         RoomsPage roomsPage = new RoomsPage((CardLayout) container.getLayout(), container);
 
         container.add(logInPage, "logInPage");
-        container.add(dashboardPage, "dashboard");
+        container.add(customerDashboardPage, "customerDashboard");
+        container.add(employeeDashboardPage, "employeeDashboard");
         container.add(registerUserPage, "registerPage");
         container.add(roomsPage, "roomsPage");
         //container.add(createAccountPage, "createAccountPage");
