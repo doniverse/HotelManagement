@@ -31,6 +31,12 @@ class DashboardPage extends JPanel {
         });
         JButton roomsBtn = new JButton("Rooms");
         roomsBtn.setBounds(440, top+150, 220, 30);
+        roomsBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(container, "roomsPage");
+            }
+        });
         JButton servicesBtn = new JButton("Services");
         servicesBtn.setBounds(440, top+200, 220, 30);
 

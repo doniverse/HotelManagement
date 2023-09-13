@@ -15,7 +15,7 @@ class RegisterUserPage extends  JPanel{
     RegisterUserPage(CardLayout cardLayout, JPanel container) {
         setLayout(null);
 
-        JLabel createAccountTitle = new JLabel("Create Account");
+        JLabel createAccountTitle = new JLabel("Register User");
         createAccountTitle.setBounds(400, 100, 400, 100);
         createAccountTitle.setFont(new Font(createAccountTitle.getFont().getName(), Font.PLAIN, 48));
 
