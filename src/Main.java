@@ -4,9 +4,13 @@ import java.awt.event.*;
 
 
 public class Main {
+
+    String loggedInUsername = "";
+    int checkoutUserId;
+    int checkoutRoomId;
     public static void main(String[] args) {
-        //com.formdev.flatlaf.themes.FlatMacLightLaf.install();
-        com.formdev.flatlaf.themes.FlatMacDarkLaf.install();
+        com.formdev.flatlaf.themes.FlatMacLightLaf.install();
+        //com.formdev.flatlaf.themes.FlatMacDarkLaf.install();
         SwingUtilities.invokeLater(() -> {
             landingPage();
         });
