@@ -305,9 +305,19 @@ public class UserRooms extends JPanel {
         scrollPane = new JScrollPane(roomsTable);
         scrollPane.setBounds(180, top + 150, 700, 320);
 
+        JButton backButton6 = new JButton("Back");
+        backButton6.setBounds(820, 530, 60, 30);
+
+        backButton6.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(container, "customerDashboard");
+            }
+        });
+
 
     add(headerLabel);
     add(scrollPane);
+    add(backButton6);
     }
 
 }

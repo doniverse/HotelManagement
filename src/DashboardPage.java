@@ -66,6 +66,7 @@ class EmployeeDashboardPage extends JPanel {
         add(roomsBtn);
         add(servicesBtn);
         add(deleteBtn);
+        add(backButton1);
     }
 }
 
