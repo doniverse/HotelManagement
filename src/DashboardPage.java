@@ -41,12 +41,16 @@ class EmployeeDashboardPage extends JPanel {
         JButton servicesBtn = new JButton("Services");
         servicesBtn.setBounds(440, top+200, 220, 30);
 
+        JButton deleteBtn = new JButton("Delete User");
+        deleteBtn.setBounds(440, top+250, 220, 30);
+
 
         add(welcomeLabel);
         add(menuLabel);
         add(registerUserBtn);
         add(roomsBtn);
         add(servicesBtn);
+        add(deleteBtn);
     }
 }
 
