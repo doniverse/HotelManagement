@@ -112,6 +112,7 @@ public class RoomsPage extends JPanel {
         JTextField bookerIdInput = new JTextField();
         bookerIdInput.setBounds(250,top+50+450, 60,25);
 
+
         JLabel roomIdLabel = new JLabel("Room ID: ");
         roomIdLabel.setFont(new Font(this.getFont().getName(),Font.PLAIN,16));
         roomIdLabel.setBounds(340, top+50+450, 90, 25);

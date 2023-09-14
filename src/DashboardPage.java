@@ -43,6 +43,12 @@ class EmployeeDashboardPage extends JPanel {
 
         JButton deleteBtn = new JButton("Delete User");
         deleteBtn.setBounds(440, top+250, 220, 30);
+        deleteBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(container, "deleteUserPage");
+            }
+        });
 
 
         add(welcomeLabel);
