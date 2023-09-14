@@ -222,6 +222,103 @@ public class RoomsPage extends JPanel {
         });
 
 
+        JButton checkOutBtn = new JButton("User Checkout");
+        // Set the custom font for the button's text
+        checkOutBtn.setFont(largerFont);
+        checkOutBtn.setBounds(650,top+50+450, 160,25);
+        checkOutBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //remove from relation table
+                //String query = "insert into RoomStatus values (5, 3, 7, '2023-09-10')";
+                //int userId = Integer.parseInt(bookerIdInput.getText());
+                int roomId = Integer.parseInt(roomIdInput.getText());
+                // Define the desired date format pattern
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                // Get the current date
+                LocalDate currentDate = LocalDate.now();
+                // Format the current date using the specified pattern
+                String formattedDate = currentDate.format(formatter);
+
+                //populate RoomStatus relation table
+                try{
+                    Connection con = DriverManager.getConnection(url, uname, dbPassword);
+                    PreparedStatement pst = con.prepareStatement("DELETE FROM RoomStatus WHERE RoomId = ?;");
+                    pst.setInt(1,roomId);
+                    //pst.setInt(2,userId);
+                    //pst.setString(3,formattedDate);
+
+                    int k = pst.executeUpdate();
+                    if(k==1){
+                        System.out.println("Record removed");
+                    }
+                }catch(SQLException error){
+                    error.printStackTrace();
+                }
+                // update rooms to vacant
+                try{
+                    Connection con = DriverManager.getConnection(url, uname, dbPassword);
+                    PreparedStatement pst = con.prepareStatement("UPDATE Rooms SET AvailabilityStatus = true WHERE RoomID = "+ roomId);
+                    int k = pst.executeUpdate();
+                    if(k==1){
+                        System.out.println("Record updated");
+                    }
+                }catch(SQLException error){
+                    error.printStackTrace();
+                }
+
+                // fetch all data
+                try {
+                    Connection con = DriverManager.getConnection(url, uname, dbPassword);
+                    Statement statement = con.createStatement();
+                    ResultSet result = statement.executeQuery(roomsQuery);
+                    ResultSetMetaData rsmd = result.getMetaData();
+
+                    // Determine the number of columns dynamically
+                    int columnCount = rsmd.getColumnCount();
+
+                    // Create an ArrayList to store the rows of data
+                    rows = new java.util.ArrayList<>();
+
+                    while (result.next()) {
+                        String[] rowData = new String[columnCount];
+                        for (int i = 1; i <= columnCount; i++) {
+                            if(i==columnCount){
+                                if(!Objects.equals(result.getString(i), "1")){
+                                    rowData[i-1] = "Occupied";
+                                }else{
+                                    rowData[i-1] = "Vacant";
+                                }
+                            }else{
+                                rowData[i - 1] = result.getString(i);
+                            }
+                        }
+                        rows.add(rowData);
+                    }
+                    // Convert the ArrayList to a 2D array
+                    roomsData = new String[rows.size()][];
+                    for (int i = 0; i < rows.size(); i++) {
+                        roomsData[i] = rows.get(i);
+                    }
+                } catch (SQLException fetchError) {
+                    fetchError.printStackTrace();
+                }
+                // Create a DefaultTableModel to hold the data and column names
+                DefaultTableModel model = new DefaultTableModel(roomsData, columnNames);
+                // Create a JTable with the DefaultTableModel
+                roomsTable = new JTable(model);
+                roomsTable.setEnabled(false);
+                // Apply the custom renderer to the first name column
+                roomsTable.getColumnModel().getColumn(0).setCellRenderer(renderer);
+                // Create a JScrollPane to add the JTable to (for scrolling)
+                scrollPane = new JScrollPane(roomsTable);
+                scrollPane.setBounds(180, top + 150, 700, 320);
+                add(scrollPane);
+
+            }
+        });
+
+
         // Add the JScrollPane to the frame
         add(headerLabel);
         JPanel filterBar = new JPanel(null);
@@ -231,8 +328,6 @@ public class RoomsPage extends JPanel {
         filterRoomIdLabel.setBounds(0,22, 60, 25);
         JTextField filterRoomIdInput = new JTextField();
         filterRoomIdInput.setBounds(60,22, 50, 25);
-
-
 
         JLabel filterTypeLabel = new JLabel("Room Type: ");
         filterTypeLabel.setBounds(130,22, 80, 25);
@@ -375,6 +470,62 @@ public class RoomsPage extends JPanel {
         });
 
 
+        JButton allButton= new JButton("Get All");
+        allButton.setBounds(550,22, 80, 25);
+        allButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //fetch all data
+                try {
+                    Connection con = DriverManager.getConnection(url, uname, dbPassword);
+                    Statement statement = con.createStatement();
+                    ResultSet result = statement.executeQuery(roomsQuery);
+                    ResultSetMetaData rsmd = result.getMetaData();
+
+                    // Determine the number of columns dynamically
+                    int columnCount = rsmd.getColumnCount();
+
+                    // Create an ArrayList to store the rows of data
+                    rows = new java.util.ArrayList<>();
+
+                    while (result.next()) {
+                        String[] rowData = new String[columnCount];
+                        for (int i = 1; i <= columnCount; i++) {
+                            if(i==columnCount){
+                                if(!Objects.equals(result.getString(i), "1")){
+                                    rowData[i-1] = "Occupied";
+                                }else{
+                                    rowData[i-1] = "Vacant";
+                                }
+                            }else{
+                                rowData[i - 1] = result.getString(i);
+                            }
+                        }
+                        rows.add(rowData);
+                    }
+                    // Convert the ArrayList to a 2D array
+                    roomsData = new String[rows.size()][];
+                    for (int i = 0; i < rows.size(); i++) {
+                        roomsData[i] = rows.get(i);
+                    }
+                } catch (SQLException fetchError) {
+                    fetchError.printStackTrace();
+                }
+                // Create a DefaultTableModel to hold the data and column names
+                DefaultTableModel model = new DefaultTableModel(roomsData, columnNames);
+                // Create a JTable with the DefaultTableModel
+                roomsTable = new JTable(model);
+                roomsTable.setEnabled(false);
+                // Apply the custom renderer to the first name column
+                roomsTable.getColumnModel().getColumn(0).setCellRenderer(renderer);
+                // Create a JScrollPane to add the JTable to (for scrolling)
+                scrollPane = new JScrollPane(roomsTable);
+                scrollPane.setBounds(180, top + 150, 700, 320);
+                add(scrollPane);
+            }
+        });
+
+
         //adding filter control
         filterBar.add(filterLabel);
         filterBar.add(filterRoomIdLabel);
@@ -384,9 +535,8 @@ public class RoomsPage extends JPanel {
         filterBar.add(filterPriceLabel);
         filterBar.add(filterPriceInput);
         filterBar.add(filterButton);
-        filterBar.setBounds(180, top+50+10, 600,90);
-
-
+        filterBar.add(allButton);
+        filterBar.setBounds(180, top+50+10, 640,90);
 
 
         add(filterBar);
@@ -396,5 +546,6 @@ public class RoomsPage extends JPanel {
         add(roomIdLabel);
         add(roomIdInput);
         add(bookBtn);
+        add(checkOutBtn);
     }
 }
