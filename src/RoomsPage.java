@@ -112,7 +112,6 @@ public class RoomsPage extends JPanel {
         JTextField bookerIdInput = new JTextField();
         bookerIdInput.setBounds(250,top+50+450, 60,25);
 
-
         JLabel roomIdLabel = new JLabel("Room ID: ");
         roomIdLabel.setFont(new Font(this.getFont().getName(),Font.PLAIN,16));
         roomIdLabel.setBounds(340, top+50+450, 90, 25);
@@ -227,6 +226,15 @@ public class RoomsPage extends JPanel {
         // Set the custom font for the button's text
         checkOutBtn.setFont(largerFont);
         checkOutBtn.setBounds(650,top+50+450, 160,25);
+
+        JButton backButton2 = new JButton("Back");
+        backButton2.setBounds(830, top+50+450, 60, 25);
+
+        backButton2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(container, "employeeDashboard");
+            }
+        });
         checkOutBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -548,5 +556,6 @@ public class RoomsPage extends JPanel {
         add(roomIdInput);
         add(bookBtn);
         add(checkOutBtn);
+        add(backButton2);
     }
 }
