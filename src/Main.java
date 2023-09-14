@@ -26,12 +26,14 @@ public class Main {
         CustomerDashboardPage customerDashboardPage = new CustomerDashboardPage((CardLayout) container.getLayout(), container);
         RegisterUserPage registerUserPage = new RegisterUserPage((CardLayout) container.getLayout(), container);
         RoomsPage roomsPage = new RoomsPage((CardLayout) container.getLayout(), container);
+        DeleteUserPage deleteUserPage = new DeleteUserPage((CardLayout) container.getLayout(), container);
 
         container.add(logInPage, "logInPage");
         container.add(customerDashboardPage, "customerDashboard");
         container.add(employeeDashboardPage, "employeeDashboard");
         container.add(registerUserPage, "registerPage");
         container.add(roomsPage, "roomsPage");
+        container.add(deleteUserPage, "deleteUserPage");
         //container.add(createAccountPage, "createAccountPage");
 
         frame.add(container);
