@@ -546,9 +546,8 @@ public class RoomsPage extends JPanel {
         filterBar.add(filterPriceLabel);
         filterBar.add(filterPriceInput);
         filterBar.add(filterButton);
-        filterBar.setBounds(180, top+50+10, 600,90);
-
-
+        filterBar.add(allButton);
+        filterBar.setBounds(180, top+50+10, 640,90);
 
 
         add(filterBar);

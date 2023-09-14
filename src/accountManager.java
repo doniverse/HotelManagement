@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
+import java.util.Objects;
 
 
 class RegisterUserPage extends  JPanel{
@@ -75,8 +76,6 @@ class RegisterUserPage extends  JPanel{
 
         JButton createAccountButton = new JButton("Create Account");
         createAccountButton.setBounds(440, top+505, 220, 30);
-
-
         createAccountButton.addActionListener(new ActionListener() {
            // @Override
             public void actionPerformed(ActionEvent e) {
@@ -427,5 +426,165 @@ class LogInPage extends JPanel {
         add(logInButton);
         add(alert);
         //add(createAccountButton);
+    }
+}
+
+
+
+
+class DeleteUserPage extends JPanel{
+    private int top = 50;
+
+    static String uname = "root";
+    static String dbPassword = "naolfekadu123";
+    static String url = "jdbc:mysql://localhost:3306/hotelmanagement";
+    String usersQuery = "SELECT * FROM Customer";
+    private JTable usersTable;
+    private String[][] usersData; // Removed {{}}
+    String[] columnNames = {"Customer ID", "First Name", "Last Name", "Gender", "Age", "Contact", "Address", "Emer. Contact", "Username"};
+
+    java.util.List<String[]> rows;
+
+    JScrollPane scrollPane;
+    public DeleteUserPage(CardLayout cardLayout, JPanel container){
+        setLayout(null);
+        JLabel headerLabel = new JLabel("Account Manager");
+        headerLabel.setBounds(180, top, 300, 50);
+        headerLabel.setFont(new Font(headerLabel.getFont().getName(), Font.BOLD, 36));
+        add(headerLabel);
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException error) {
+            error.printStackTrace();
+        }
+
+        try {
+            Connection con = DriverManager.getConnection(url, uname, dbPassword);
+            Statement statement = con.createStatement();
+            ResultSet result = statement.executeQuery(usersQuery);
+
+            ResultSetMetaData rsmd = result.getMetaData();
+
+            // Determine the number of columns dynamically
+            int columnCount = rsmd.getColumnCount();
+
+            // Create an ArrayList to store the rows of data
+            rows = new java.util.ArrayList<>();
+
+            while (result.next()) {
+                String[] rowData = new String[columnCount];
+                for (int i = 1; i <= columnCount; i++) {
+                        rowData[i - 1] = result.getString(i);
+                }
+                rows.add(rowData);
+            }
+
+            // Convert the ArrayList to a 2D array
+            usersData = new String[rows.size()][];
+            for (int i = 0; i < rows.size(); i++) {
+                usersData[i] = rows.get(i);
+            }
+        } catch (SQLException fetchError) {
+            fetchError.printStackTrace();
+        }
+
+        // Create a DefaultTableModel to hold the data and column names
+        DefaultTableModel model = new DefaultTableModel(usersData, columnNames);
+
+        // Create a JTable with the DefaultTableModel
+        usersTable = new JTable(model);
+        usersTable.setEnabled(false);
+
+        // Create a custom cell renderer to make the first name column bold
+        // Apply the custom renderer to the first name column
+        usersTable.getColumnModel().getColumn(0);
+
+        // Create a JScrollPane to add the JTable to (for scrolling)
+        scrollPane = new JScrollPane(usersTable);
+        scrollPane.setBounds(180, top + 150, 750, 320);
+        add(scrollPane);
+
+
+        JLabel deleteIdLabel = new JLabel("User ID: ");
+        deleteIdLabel.setFont(new Font(this.getFont().getName(),Font.PLAIN,16));
+        deleteIdLabel.setBounds(180, top+50+450, 90, 25);
+        add(deleteIdLabel);
+        JTextField deleteIdInput = new JTextField();
+        deleteIdInput.setBounds(250,top+50+450, 60,25);
+        add(deleteIdInput);
+        JButton deleteBtn = new JButton("Delete User");
+        deleteBtn.setBounds(340,top+50+450, 100,25);
+        deleteBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int customerID = Integer.parseInt(deleteIdInput.getText());
+                try{
+                    Connection con = DriverManager.getConnection(url, uname, dbPassword);
+                    PreparedStatement pst = con.prepareStatement("DELETE FROM Customer WHERE CustomerID = ?;");
+                    pst.setInt(1,customerID);
+
+                    int k = pst.executeUpdate();
+                    if(k==1){
+                        System.out.println("User removed");
+                    }
+                }catch(SQLException error){
+                    error.printStackTrace();
+                }
+
+                try {
+                    Connection con = DriverManager.getConnection(url, uname, dbPassword);
+                    Statement statement = con.createStatement();
+                    ResultSet result = statement.executeQuery(usersQuery);
+
+                    ResultSetMetaData rsmd = result.getMetaData();
+
+                    // Determine the number of columns dynamically
+                    int columnCount = rsmd.getColumnCount();
+
+                    // Create an ArrayList to store the rows of data
+                    rows = new java.util.ArrayList<>();
+
+                    while (result.next()) {
+                        String[] rowData = new String[columnCount];
+                        for (int i = 1; i <= columnCount; i++) {
+                            rowData[i - 1] = result.getString(i);
+                        }
+                        rows.add(rowData);
+                    }
+
+                    // Convert the ArrayList to a 2D array
+                    usersData = new String[rows.size()][];
+                    for (int i = 0; i < rows.size(); i++) {
+                        usersData[i] = rows.get(i);
+                    }
+                } catch (SQLException fetchError) {
+                    fetchError.printStackTrace();
+                }
+
+                // Create a DefaultTableModel to hold the data and column names
+                DefaultTableModel model = new DefaultTableModel(usersData, columnNames);
+
+                // Create a JTable with the DefaultTableModel
+                usersTable = new JTable(model);
+                usersTable.setEnabled(false);
+
+                // Create a custom cell renderer to make the first name column bold
+                // Apply the custom renderer to the first name column
+                usersTable.getColumnModel().getColumn(0);
+
+                // Create a JScrollPane to add the JTable to (for scrolling)
+                scrollPane = new JScrollPane(usersTable);
+                scrollPane.setBounds(180, top + 150, 750, 320);
+                add(scrollPane);
+
+
+            }
+        });
+
+        add(deleteBtn);
+
+
+
     }
 }
