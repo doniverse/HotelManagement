@@ -6,13 +6,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
 import java.util.Objects;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class RoomsPage extends JPanel {
     private int top = 50;
     static String uname = "root";
     static String dbPassword = "naolfekadu123";
     static String url = "jdbc:mysql://localhost:3306/hotelmanagement";
-    String roomsQuery = "select * from Rooms ORDER BY AvailabilityStatus";
+    String roomsQuery = "select * from Rooms where availabilitystatus = true";
     private JTable roomsTable;
     private String[][] roomsData; // Removed {{}}
     String[] columnNames = {"Room ID", "Room Type", "Price per Night", "Status"};
@@ -56,7 +58,7 @@ public class RoomsPage extends JPanel {
                 String[] rowData = new String[columnCount];
                 for (int i = 1; i <= columnCount; i++) {
                     if(i==columnCount){
-                        if(Objects.equals(result.getString(i), "1")){
+                        if(!Objects.equals(result.getString(i), "1")){
                             rowData[i-1] = "Occupied";
                         }else{
                             rowData[i-1] = "Vacant";
@@ -124,6 +126,100 @@ public class RoomsPage extends JPanel {
         // Set the custom font for the button's text
         bookBtn.setFont(largerFont);
         bookBtn.setBounds(490,top+50+450, 130,25);
+        bookBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String query = "insert into RoomStatus values (5, 3, 7, '2023-09-10')";
+                int userId = Integer.parseInt(bookerIdInput.getText());
+                int roomId = Integer.parseInt(roomIdInput.getText());
+                // Define the desired date format pattern
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                // Get the current date
+                LocalDate currentDate = LocalDate.now();
+                // Format the current date using the specified pattern
+                String formattedDate = currentDate.format(formatter);
+
+                //populate RoomStatus relation table
+                try{
+                    Connection con = DriverManager.getConnection(url, uname, dbPassword);
+                    PreparedStatement pst = con.prepareStatement("INSERT INTO RoomStatus(RoomId, CustomerId, CheckInTime) values (?, ?, ?)");
+                    pst.setInt(1,roomId);
+                    pst.setInt(2,userId);
+                    pst.setString(3,formattedDate);
+
+                    int k = pst.executeUpdate();
+                    if(k==1){
+                        System.out.println("Record added");
+                    }
+                }catch(SQLException error){
+                    error.printStackTrace();
+                }
+
+
+
+                //update AvailabilityStatus
+
+                try{
+                    Connection con = DriverManager.getConnection(url, uname, dbPassword);
+                    PreparedStatement pst = con.prepareStatement("UPDATE Rooms SET AvailabilityStatus = false WHERE RoomID = "+ roomId);
+
+                    int k = pst.executeUpdate();
+                    if(k==1){
+                        System.out.println("Record updated");
+                    }
+                }catch(SQLException error){
+                    error.printStackTrace();
+                }
+
+                //refetch data
+                try {
+                    Connection con = DriverManager.getConnection(url, uname, dbPassword);
+                    Statement statement = con.createStatement();
+                    ResultSet result = statement.executeQuery(roomsQuery);
+                    ResultSetMetaData rsmd = result.getMetaData();
+
+                    // Determine the number of columns dynamically
+                    int columnCount = rsmd.getColumnCount();
+
+                    // Create an ArrayList to store the rows of data
+                    rows = new java.util.ArrayList<>();
+
+                    while (result.next()) {
+                        String[] rowData = new String[columnCount];
+                        for (int i = 1; i <= columnCount; i++) {
+                            if(i==columnCount){
+                                if(!Objects.equals(result.getString(i), "1")){
+                                    rowData[i-1] = "Occupied";
+                                }else{
+                                    rowData[i-1] = "Vacant";
+                                }
+                            }else{
+                                rowData[i - 1] = result.getString(i);
+                            }
+                        }
+                        rows.add(rowData);
+                    }
+                    // Convert the ArrayList to a 2D array
+                    roomsData = new String[rows.size()][];
+                    for (int i = 0; i < rows.size(); i++) {
+                        roomsData[i] = rows.get(i);
+                    }
+                } catch (SQLException fetchError) {
+                    fetchError.printStackTrace();
+                }
+                // Create a DefaultTableModel to hold the data and column names
+                DefaultTableModel model = new DefaultTableModel(roomsData, columnNames);
+                // Create a JTable with the DefaultTableModel
+                roomsTable = new JTable(model);
+                roomsTable.setEnabled(false);
+                // Apply the custom renderer to the first name column
+                roomsTable.getColumnModel().getColumn(0).setCellRenderer(renderer);
+                // Create a JScrollPane to add the JTable to (for scrolling)
+                scrollPane = new JScrollPane(roomsTable);
+                scrollPane.setBounds(180, top + 150, 700, 320);
+                add(scrollPane);
+            }
+        });
 
 
         // Add the JScrollPane to the frame
@@ -175,7 +271,7 @@ public class RoomsPage extends JPanel {
 
                     if(filterPriceInput.getText().length() > 0){
                         MaxPrice =Integer.parseInt(filterPriceInput.getText());
-                        baseQuery += " AND PricePerNight > ?";
+                        baseQuery += " AND PricePerNight <= ?";
                         filterAdded = true;
                     }
 
@@ -189,7 +285,7 @@ public class RoomsPage extends JPanel {
                     if (!filterAdded) {
                         baseQuery = "SELECT * FROM Rooms";
                     }
-                    baseQuery+="ORDER BY AvailabilityStatus";
+                    baseQuery+="AND availabilitystatus = true";
 
                     PreparedStatement pst = con.prepareStatement(baseQuery);
 
@@ -221,7 +317,7 @@ public class RoomsPage extends JPanel {
                         String[] rowData = new String[columnCount];
                         for (int i = 1; i <= columnCount; i++) {
                             if(i==columnCount){
-                                if(Objects.equals(rs.getString(i), "1")){
+                                if(!Objects.equals(rs.getString(i), "1")){
                                     rowData[i-1] = "Occupied";
                                 }else{
                                     rowData[i-1] = "Vacant";
