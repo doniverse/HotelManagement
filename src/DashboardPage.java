@@ -44,6 +44,15 @@ class EmployeeDashboardPage extends JPanel {
         JButton deleteBtn = new JButton("Delete User");
         deleteBtn.setBounds(440, top+250, 220, 30);
 
+        JButton backButton1 = new JButton("Back");
+        backButton1.setBounds(700, top+ 300, 60, 30);
+        backButton1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(container, "logInPage");
+            }
+        });
+
+
 
         add(welcomeLabel);
         add(menuLabel);
@@ -51,6 +60,7 @@ class EmployeeDashboardPage extends JPanel {
         add(roomsBtn);
         add(servicesBtn);
         add(deleteBtn);
+        add(backButton1);
     }
 }
 
@@ -82,7 +92,7 @@ class CustomerDashboardPage extends JPanel {
         menuLabel.setBounds(440, top+50, 300, 50);
 
         JButton roomsBtn = new JButton("Rooms");
-        roomsBtn.setBounds(440, top+150, 220, 30);
+        roomsBtn.setBounds(440, top+100, 220, 30);
         roomsBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -90,13 +100,23 @@ class CustomerDashboardPage extends JPanel {
             }
         });
         JButton servicesBtn = new JButton("Services");
-        servicesBtn.setBounds(440, top+200, 220, 30);
+        servicesBtn.setBounds(440, top+150, 220, 30);
+
+        JButton backButton4 = new JButton("Back");
+        backButton4.setBounds(670, top+190, 60, 30 );
+
+        backButton4.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(container, "logInPage");
+            }
+        });
 
 
         add(welcomeLabel);
         add(menuLabel);
         add(roomsBtn);
         add(servicesBtn);
+        add(backButton4);
     }
 }
 

@@ -75,6 +75,8 @@ class RegisterUserPage extends  JPanel{
 
         JButton createAccountButton = new JButton("Create Account");
         createAccountButton.setBounds(440, top+505, 220, 30);
+
+
         createAccountButton.addActionListener(new ActionListener() {
            // @Override
             public void actionPerformed(ActionEvent e) {
@@ -109,6 +111,14 @@ class RegisterUserPage extends  JPanel{
                 }
             }
         });
+        JButton backButton3 = new JButton("Back");
+        backButton3.setBounds(680, top+505, 60, 30);
+
+        backButton3.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(container, "employeeDashboard");
+            }
+        });
 
         /*  JButton logInButton = new JButton("Log In");
         logInButton.setBounds(440, top+495, 220, 30);
@@ -140,6 +150,7 @@ class RegisterUserPage extends  JPanel{
         add(femaleRadioButton);
         //add(logInButton);
         add(createAccountButton);
+        add(backButton3);
     }
 }
 
