@@ -449,7 +449,7 @@ class DeleteUserPage extends JPanel{
     public DeleteUserPage(CardLayout cardLayout, JPanel container){
         setLayout(null);
         JLabel headerLabel = new JLabel("Account Manager");
-        headerLabel.setBounds(180, top, 300, 50);
+        headerLabel.setBounds(180, top+50, 400, 50);
         headerLabel.setFont(new Font(headerLabel.getFont().getName(), Font.BOLD, 36));
         add(headerLabel);
 
@@ -515,6 +515,15 @@ class DeleteUserPage extends JPanel{
         add(deleteIdInput);
         JButton deleteBtn = new JButton("Delete User");
         deleteBtn.setBounds(340,top+50+450, 100,25);
+
+        JButton backButton5 = new JButton("Back");
+        backButton5.setBounds(870, top+50+450, 60,30);
+
+        backButton5.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(container, "employeeDashboard");
+            }
+        });
         deleteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -583,6 +592,7 @@ class DeleteUserPage extends JPanel{
         });
 
         add(deleteBtn);
+        add(backButton5);
 
 
 
