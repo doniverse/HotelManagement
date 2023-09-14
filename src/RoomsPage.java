@@ -440,21 +440,6 @@ public class RoomsPage extends JPanel {
                         roomsData[i] = rows.get(i);
                     }
 
-
-
-//                    while (rs.next()) {
-//                        // Retrieve data from the ResultSet
-//                        int fetchedRoomID = rs.getInt("roomID");
-//                        String fetchedRoomType = rs.getString("roomType");
-//                        double fetchedPricePerNight = rs.getDouble("PricePerNight");
-//
-//
-//
-//                        // Process the fetched data as needed
-//                        System.out.println("Room ID: " + fetchedRoomID);
-//                        System.out.println("Room Type: " + fetchedRoomType);
-//                        System.out.println("Price Per Night: " + fetchedPricePerNight);
-//                    }
                     rs.close();
                 } catch (SQLException error) {
                     error.printStackTrace();

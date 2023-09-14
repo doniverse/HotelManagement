@@ -101,7 +101,7 @@ class CustomerDashboardPage extends JPanel {
         roomsBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cardLayout.show(container, "roomsPage");
+                cardLayout.show(container, "userRoomsPage");
             }
         });
         JButton servicesBtn = new JButton("Services");
