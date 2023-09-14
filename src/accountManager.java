@@ -8,6 +8,9 @@ import java.sql.*;
 
 class RegisterUserPage extends  JPanel{
     private int top = 80;
+    static String uname = "root";
+    static String dbPassword = "naolfekadu123";
+    static String url = "jdbc:mysql://localhost:3306/hotelmanagement";
 
     RegisterUserPage(CardLayout cardLayout, JPanel container) {
         setLayout(null);
@@ -41,46 +44,79 @@ class RegisterUserPage extends  JPanel{
         JTextField contactInput = new JTextField();
         contactInput.setBounds(440, top+270,220, 25);
 
+        JLabel emergencyContact = new JLabel("Emergency Contact");
+        emergencyContact.setBounds(440, top+260, 200, 100);
+        JTextField emergencyContactInput = new JTextField();
+        emergencyContactInput.setBounds(440, top+320, 220, 25);
+
         JLabel usernameLabel = new JLabel("Username:");
-        usernameLabel.setBounds(440, top+260, 200, 100);
+        usernameLabel.setBounds(440, top+310, 200, 100);
         JTextField usernameInput = new JTextField();
-        usernameInput.setBounds(440, top+320, 220, 25);
+        usernameInput.setBounds(440, top+370, 220, 25);
 
         JLabel passwordLabel = new JLabel("Password:");
-        passwordLabel.setBounds(440, top+310, 200, 100);
+        passwordLabel.setBounds(440, top+360, 200, 100);
         JTextField passwordInput = new JPasswordField();
-        passwordInput.setBounds(440, top+370, 220, 25);
+        passwordInput.setBounds(440, top+420, 220, 25);
 
         JLabel genderLabel = new JLabel("Gender:");
-        genderLabel.setBounds(440, top+360, 200, 100);
+        genderLabel.setBounds(440, top+440, 200, 50);
         // Create a ButtonGroup to group the radio buttons
         ButtonGroup genderGroup = new ButtonGroup();
         // Create radio buttons for Male and Female
         JRadioButton maleRadioButton = new JRadioButton("Male");
-        maleRadioButton.setBounds(440, top + 415, 100, 30);
+        maleRadioButton.setBounds(440, top + 470, 100, 30);
         JRadioButton femaleRadioButton = new JRadioButton("Female");
-        femaleRadioButton.setBounds(550, top + 415, 100, 30);
+        femaleRadioButton.setBounds(550, top + 470, 100, 30);
         // Add radio buttons to the ButtonGroup
         genderGroup.add(maleRadioButton);
         genderGroup.add(femaleRadioButton);
 
 
         JButton createAccountButton = new JButton("Create Account");
-        createAccountButton.setBounds(440, top+450, 220, 30);
+        createAccountButton.setBounds(440, top+505, 220, 30);
         createAccountButton.addActionListener(new ActionListener() {
-            @Override
+           // @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("🎊 registering user");
+                try{
+                    Connection con = DriverManager.getConnection(url, uname, dbPassword);
+                    PreparedStatement pst = con.prepareStatement("INSERT INTO Customer(FirstName, LastName, Gender, Contact, Adress, EmergencyContact, username, password, Age) values (?, ?, ?,?,?, ?,?, ?,?)");
+                    pst.setString(1,firstNameInput.getText());
+                    pst.setString(2,lastNameInput.getText());
+                    pst.setInt(3,Integer.parseInt(ageInput.getText()));
+                    pst.setString(4,addressInput.getText());
+                    pst.setString(5,contactInput.getText());
+                    pst.setString(6, emergencyContactInput.getText());
+                    pst.setString(7,usernameInput.getText());
+                    pst.setString(8,passwordInput.getText());
+
+                    String selectedGender=" ";
+                    if (maleRadioButton.isSelected())
+                        selectedGender = "Male";
+                    else if (femaleRadioButton.isSelected())
+                        selectedGender = "Female";
+
+                    pst.setString(9, selectedGender);
+
+
+                    int k = pst.executeUpdate();
+                    if(k==1){
+                        System.out.println("Record added");
+                    }
+                }catch(SQLException error){
+                    error.printStackTrace();
+                }
             }
         });
 
-        JButton logInButton = new JButton("Log In");
+        /*  JButton logInButton = new JButton("Log In");
         logInButton.setBounds(440, top+495, 220, 30);
         logInButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(container, "logInPage");
             }
-        });
+        }); */
 
         add(createAccountTitle);
         add(firstNameLabel);
@@ -93,6 +129,8 @@ class RegisterUserPage extends  JPanel{
         add(addressInput);
         add(contactLabel);
         add(contactInput);
+        add(emergencyContact);
+        add(emergencyContactInput);
         add(usernameLabel);
         add(usernameInput);
         add(passwordLabel);
@@ -100,7 +138,7 @@ class RegisterUserPage extends  JPanel{
         add(genderLabel);
         add(maleRadioButton);
         add(femaleRadioButton);
-        add(logInButton);
+        //add(logInButton);
         add(createAccountButton);
     }
 }
@@ -273,7 +311,7 @@ class LogInPage extends JPanel {
 
         JLabel logInTitle = new JLabel("Log In");
         logInTitle.setBounds(480, 100, 200, 100);
-        logInTitle.setFont(new Font(logInTitle.getFont().getName(), Font.PLAIN, 48));
+        logInTitle.setFont(new Font(logInTitle.getFont().getName(), Font.BOLD, 48));
 
         JLabel usernameLabel = new JLabel("Username:");
         usernameLabel.setBounds(440, 150, 200, 100);

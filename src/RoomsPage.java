@@ -33,7 +33,7 @@ public class RoomsPage extends JPanel {
 
         JLabel headerLabel = new JLabel("Rooms");
         headerLabel.setBounds(180, top, 300, 50);
-        headerLabel.setFont(new Font(headerLabel.getFont().getName(), Font.PLAIN, 36));
+        headerLabel.setFont(new Font(headerLabel.getFont().getName(), Font.BOLD, 36));
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");

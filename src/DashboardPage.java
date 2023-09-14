@@ -18,7 +18,7 @@ class EmployeeDashboardPage extends JPanel {
 //        add(prevPageButton);
         JLabel welcomeLabel = new JLabel("Welcome");
         welcomeLabel.setBounds(440, top, 300, 50);
-        welcomeLabel.setFont(new Font(welcomeLabel.getFont().getName(), Font.PLAIN, 48));
+        welcomeLabel.setFont(new Font(welcomeLabel.getFont().getName(), Font.BOLD, 48));
         JLabel menuLabel = new JLabel("Choose your action: ");
         menuLabel.setBounds(440, top+50, 300, 50);
 
@@ -73,7 +73,7 @@ class CustomerDashboardPage extends JPanel {
 //        add(prevPageButton);
         JLabel welcomeLabel = new JLabel("Welcome");
         welcomeLabel.setBounds(440, top, 300, 50);
-        welcomeLabel.setFont(new Font(welcomeLabel.getFont().getName(), Font.PLAIN, 48));
+        welcomeLabel.setFont(new Font(welcomeLabel.getFont().getName(), Font.BOLD, 48));
         JLabel menuLabel = new JLabel("Choose your action: ");
         menuLabel.setBounds(440, top+50, 300, 50);
 
