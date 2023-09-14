@@ -1,20 +1,5 @@
-create database HotelManagement;
-use HotelManagement;
 
-create table RoomStatus(
-ReservedId int primary key auto_increment not null,
-RoomId int not null,
-CustomerId int not null,
-CheckInTime date
-)
 
-alter table RoomStatus
-set constraints fk_roomId
-foreign key RoomId references Rooms (roomId)
-
-alter table RoomStatus
-set constraints fk_customerId
-foreign key CustomerId references Customer (CustomerId)
 
 insert into RoomStatus values (1, 5, 8, '2023-09-11');
 insert into RoomStatus values (2, 2, 9, '2023-09-08');
